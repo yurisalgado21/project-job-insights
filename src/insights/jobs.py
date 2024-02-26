@@ -1,11 +1,6 @@
 from typing import List, Dict
 import csv
 
-jobs = [
-    {"id": 1, "industry": "IT", "job_type": "FULL_TIME"},
-    {"id": 2, "industry": "Healthcare", "job_type": "PART_TIME"},
-]
-
 
 class ProcessJobs:
     def __init__(self) -> None:
