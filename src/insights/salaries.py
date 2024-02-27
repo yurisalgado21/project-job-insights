@@ -29,16 +29,20 @@ class ProcessSalaries(ProcessJobs):
             if int(job["min_salary"]) > int(job["max_salary"]):
                 raise ValueError
 
-            return job["min_salary"] <= int(salary) <= job["max_salary"]
+            return (
+                int(job["min_salary"]) <= int(salary) <= int(job["max_salary"])
+            )
         except (TypeError, KeyError, ValueError):
             raise ValueError
 
     def filter_by_salary_range(
         self, jobs: List[dict], salary: Union[str, int]
     ) -> List[Dict]:
-        new_list = []
+        jobs_filtered = []
         for job in jobs:
-            result = self.matches_salary_range(job, salary)
-            if result:
-                new_list.append(job)
-        return new_list.sort()
+            try:
+                if self.matches_salary_range(job, salary):
+                    jobs_filtered.append(job)
+            except ValueError:
+                continue
+        return jobs_filtered
